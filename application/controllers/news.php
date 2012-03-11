@@ -6,34 +6,34 @@ class News extends CI_Controller {
 		$this->load->model('news_model');
 	}
 	
-	public function index() {
+  public function index() {
     $data['articles'] = $this->news_model->get_articles(5);
-		
-		$this->load->view('templates/header');
+
+    $this->load->view('templates/header');
     $this->load->view('news/index', $data);
-		$this->load->view('templates/footer');
+    $this->load->view('templates/footer');
   }
 	
-	//Display Article by url slug
-	public function article($url_title) {
-		$data['article'] = $this->news_model->get_article($url_title);
-		if (empty($data['article'])) show_404();
-		$entry_time = $data['article']['entry_time'];
-		$data['prev'] = $this->news_model->get_prev($entry_time);
-		$data['next'] = $this->news_model->get_next($entry_time);
-		$this->load->view('templates/header');
+  //Display Article by url slug
+  public function article($url_title) {
+    $data['article'] = $this->news_model->get_article($url_title);
+    if (empty($data['article'])) show_404();
+    $entry_time = $data['article']['entry_time'];
+    $data['prev'] = $this->news_model->get_prev($entry_time);
+    $data['next'] = $this->news_model->get_next($entry_time);
+    $this->load->view('templates/header');
     $this->load->view('news/article', $data);
-		$this->load->view('templates/footer');
-	}
+    $this->load->view('templates/footer');
+  }
 	
-	//Display Archives
-	public function archives() {
-		$data['articles'] = $this->news_model->get_articles();
-		
-		$this->load->view('templates/header');
+  //Display Archives
+  public function archives() {
+    $data['articles'] = $this->news_model->get_articles();
+
+    $this->load->view('templates/header');
     $this->load->view('news/index', $data);
-		$this->load->view('templates/footer');
-	}
+    $this->load->view('templates/footer');
+  }
 	
 	//Save when creating a new article or updating
   public function save($url_title="") {
@@ -77,16 +77,14 @@ class News extends CI_Controller {
     }    
   }
 	
-	public function delete($id=0) {
-	  if($id==0) {
-	    show_404();
-    }
+  public function delete($id=0) {
+    if($id==0) show_404();
     $this->news_model->delete($id);
     $data['message']='Your post was deleted successfully.';
     $this->load->view('templates/header');
     $this->load->view('news/message', $data);
     $this->load->view('templates/footer');
-	}
+  }
 	
 }
 
